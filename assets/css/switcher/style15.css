@@ -1,0 +1,84 @@
+#style-switcher h2 a { background: #ff639f none repeat scroll 0 0 }
+
+
+/*START SCROLL TO TOP*/
+.topcontrol {background: #ff639f none repeat scroll 0 0;}
+/*END SCROLL TO TOP*/
+
+
+.section-title span {background: #ff639f none repeat scroll 0 0;}
+
+.btn-light-bg {background: #ff639f none repeat scroll 0 0;}
+
+.header { background: #ff639f }
+
+.header_contact ul li i {color: #fff;}
+
+.navbar-default .navbar-nav>li>a:hover {color: #ff639f !important }
+
+.info {background: #ff639f none repeat scroll 0 0;}
+
+.about-us-content h2 span {color: #ff639f;}
+
+.progress-bar > span {background: #ff639f none repeat scroll 0 0;}
+
+ul.tab-buttons li.selected {background: #ff639f none repeat scroll 0 0;border: 1px solid #ff639f;}
+
+.tab-buttons li a i {color: #ff639f;}
+
+.work_flow ul li i {background: #ff639f none repeat scroll 0 0;}
+
+.work_flow ul li a:hover{color:#ff639f;}
+
+.team-member-second .contact-details ul a:hover{background: #ff639f;}
+
+.single_testimonial img {border: 4px solid #ff639f;}
+
+.single_service:hover i {color: #ff639f;}
+
+.pricing-table h3{color: #ff639f;}
+
+.our_work_menu ul li:hover,
+.our_work_menu ul li.active {border-color: #ff639f;background: #ff639f;}
+
+.sing_link_img a:hover {background: #ff639f;}
+
+.sing_work_text_link {background: rgba(28, 186, 200, 0.8) none repeat scroll 0 0;}
+
+.related_project  h4:hover { color: #ff639f }
+
+.ans span {background: #ff639f  none repeat scroll 0 0;}
+
+.single_blog_dsc a {color: #ff639f;}
+
+.post-date {background: #ff639f none repeat scroll 0 0;}
+
+.post-info li a:hover { color: #ff639f }
+
+.blog-post .post-info li .date {background: #ff639f none repeat scroll 0 0;}
+
+.blog-post .post-info li .comment {background: #ff639f none repeat scroll 0 0;}
+
+ul.blog_pagination li a:hover {background: #ff639f;border: 1px solid #ff639f;}
+
+.recent_single h4:hover { color: #ff639f }
+
+.recent_single span i {color: #ff639f;}
+
+.categories ul li a:hover { color: #ff639f }
+
+.single_comment h5 {color: #ff639f;}
+
+.blog_sidebar_title {color: #ff639f;}
+
+.single-address i {background: #ff639f none repeat scroll 0 0;}
+
+.form-control:hover,
+.form-control:focus {border: 1px solid #ff639f;}
+
+.actions input {background: #ff639f;}
+
+
+.buy_now {background: #ff639f;}
+
+

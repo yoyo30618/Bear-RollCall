@@ -1,0 +1,35 @@
+創建不同課程資料表
+CREATE TABLE `Bear-Interview_RollCall`.`DataStruct_11010` 
+( `StudentID` CHARACTER(80) NOT NULL ,  
+`StudentName` CHARACTER(80) NOT NULL ,  
+`Week1` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week2` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week3` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week4` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week5` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week6` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week7` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week8` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week9` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week10` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week11` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week12` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week13` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week14` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week15` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week16` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week17` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week18` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week19` CHARACTER(80) NOT NULL DEFAULT "",    
+`Week20` CHARACTER(80) NOT NULL DEFAULT "",  
+PRIMARY KEY  (`StudentID`(80))) ENGINE = InnoDB;
+
+
+
+創建內碼與學生資料表 雙主鍵
+CREATE TABLE `StudentName`(`StudentID` TEXT NOT NULL,
+                           `StudentName`  TEXT NOT NULL,
+                           `CardID` TEXT NOT NULL,
+                           `Notice`  TEXT NOT NULL,
+                           PRIMARY KEY(`StudentID`(100),`StudentName`(100))
+                          )
