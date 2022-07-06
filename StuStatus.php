@@ -168,6 +168,7 @@
 										<option value="C403">C403</option>
 										<option value="C404">C404</option>
 										<option value="C420">C420</option>
+										<option value="C512">C512</option>
 										<option value="C506">C506</option>
 									</select><br><br>
 									<input type="text" name="ClassName_Cht" class="form-control" placeholder="新課程之中文名稱"required="required"><br>
@@ -197,9 +198,9 @@
 							<div class="single_service_promotion">
 								<h1>課程人員修改</h1>
 								<br><br>
-								<form class="form" name="ChangeStuCard" method="post" action="AddStuToClass.php">
+								<form class="form" name="AddStuToClass" method="post" action="AddStuToClass.php">
 									<select name="WhatClass" style="font-size:20px;" id="SelectClass">
-										<option>請選擇課程</option>
+										<option disabled ="disabled">請選擇課程</option>
 										<?php 
 											$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
 											$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
@@ -219,7 +220,8 @@
 									</select>
 									<br>	<br>			
 									<input type="text" name="StuID" class="form-control" placeholder="請輸入欲加入課程的學號/卡號"required="required"><br>
-									<input type="submit" value="新增學生" name="AddStu" id="submitButton" class="btn-light-bg" title="卡號修改"/><br>
+									<input type="text" name="StuName" class="form-control" placeholder="學生姓名"><br>
+									<input type="submit" value="新增學生" name="AddStuToClass" id="submitButton" class="btn-light-bg" title="新增學生"/><br>
 								</form>
 								<br>
 							</div>
@@ -227,7 +229,6 @@
 					</div>
 				</div>
 			</section>	
-			<!------------------------------------------------------以下待修------------------------------------------------------>
 			<section class="service">			
 				<div class="container">
 					<div class="row text-center">
