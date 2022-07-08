@@ -1,19 +1,18 @@
-<svg width="100%" height="600">
+<svg width="100%" height="550">
   <?php
-    echo "<a><rect x=\"670\" y=\"5\" width=\"280\" height=\"30\" fill=\"yellow\" stroke=\"black\"></a>";
-    echo "<a><text x=\"790\" y=\"25\">黑板</text></a>";
-    
+    echo "<a><rect x='40%' y='5%' width='15%' height='6%' fill='yellow' stroke='black'></a>";
+    echo "<a><text x='46.5%' y='8.7%'>黑板</text></a>";
     for ( $i=0 ; $i<4 ; $i++ ) {
       for ( $j=0 ; $j<13 ; $j++ ) {
-        $x=540+$i*120+10;
-        $y=50+$j*40;
-        $txtx=540+$i*120+60;
-        $txty=50+$j*40+25;
+        $x=33+7*$i;
+        $y=15+6*$j;
+        $txtx=33+7*$i+2.6;
+        $txty=15+6*$j+3.5;
         $SeatNum=$i."-".$j;
         //2列多空一走道
         if($i>=2){
-          $x+=40;
-          $txtx+=40;
+          $x+=1;
+          $txtx+=1;
         }
         if($j==0&&$i<2){
           //教師座位 後面額外畫
@@ -21,40 +20,40 @@
         else if(isset($_GET['Seat'])){
           if($_GET['Seat']==$SeatNum){
             echo "<a>";
-            echo "<rect x=\"$x\" y=\"$y\" width=\"120\" height=\"40\" fill=\"lightblue\" stroke=\"black\">";
+            echo "<rect x='$x%' y='$y%' width='7%' height='6%' fill='lightblue' stroke='black'>";
             echo "</a>";
-            echo "<a><text x=\"$txtx\" y=\"$txty\">$SeatNum</text></a>";
+            echo "<a><text x='$txtx%' y='$txty%'>$SeatNum</text></a>";
           }
           else if(in_array($SeatNum,$SeatHasPeo)){
             echo "<a>";
-            echo "<rect x=\"$x\" y=\"$y\" width=\"120\" height=\"40\" fill=\"red\" stroke=\"black\">";
+            echo "<rect x='$x%' y='$y%' width='7%' height='6%' fill='red' stroke='black'>";
             echo "</a>";
-            echo "<a><text x=\"$txtx\" y=\"$txty\">$SeatNum</text></a>";
+            echo "<a><text x='$txtx%' y='$txty%'>$SeatNum</text></a>";
           }
           else{
-            echo "<a xlink:href=\"RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."\">";
-            echo "<rect x=\"$x\" y=\"$y\" width=\"120\" height=\"40\" fill=\"yellow\" stroke=\"black\">";
+            echo "<a xlink:href='RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."'>";
+            echo "<rect x='$x%' y='$y%' width='7%' height='6%' fill='yellow' stroke='black'>";
             echo "</a>";
-            echo "<a xlink:href=\"RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."\"><text x=\"$txtx\" y=\"$txty\">$SeatNum</text></a>";
+            echo "<a xlink:href='RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."'><text x='$txtx%' y='$txty%'>$SeatNum</text></a>";
           }
         }
         else if(in_array($SeatNum,$SeatHasPeo)){
           echo "<a>";
-          echo "<rect x=\"$x\" y=\"$y\" width=\"120\" height=\"40\" fill=\"red\" stroke=\"black\">";
+          echo "<rect x='$x%' y='$y%' width='7%' height='6%' fill='red' stroke='black'>";
           echo "</a>";
-          echo "<a><text x=\"$txtx\" y=\"$txty\">$SeatNum</text></a>";
+          echo "<a><text x='$txtx%' y='$txty%'>$SeatNum</text></a>";
         }
         else{
-          echo "<a xlink:href=\"RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."\">";
-          echo "<rect x=\"$x\" y=\"$y\" width=\"120\" height=\"40\" fill=\"yellow\" stroke=\"black\">";
+          echo "<a xlink:href='RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."'>";
+          echo "<rect x='$x%' y='$y%' width='7%' height='6%' fill='yellow' stroke='black'>";
           echo "</a>";
-          echo "<a xlink:href=\"RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."\"><text x=\"$txtx\" y=\"$txty\">$SeatNum</text></a>";
+          echo "<a xlink:href='RollCall.php?ClassEng=".$_GET['ClassEng']."&ClassCht=".$_GET['ClassCht']."&Week=".$_GET['Week']."&Seat=".$SeatNum."'><text x='$txtx%' y='$txty%'>$SeatNum</text></a>";
         }
       }
     }
     echo "<a>";
-    echo "<rect x=\"550\" y=\"50\" width=\"120\" height=\"40\" fill=\"yellow\" stroke=\"black\">";
+    echo "<rect x='33%' y='15%' width='14%' height='6%' fill='yellow' stroke='black'>";
     echo "</a>";
-    echo "<a><text x=\"585\" y=\"75\">教師機</text></a>";
+    echo "<a><text x='38.8%' y='18.5%'>教師機</text></a>";
   ?>
 </svg>
