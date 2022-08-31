@@ -5,9 +5,7 @@
 		<?php 
 			session_start();
 			require("conn_mysql.php");
-			if(!isset($_COOKIE['Bear-RollCall_Account'])){//未登入 跳轉離開
-				header('refresh:0;url=index.php');
-			}
+			require("conn_mysql_rollcall.php");
 		?>
 		<!-- 設定抬頭與預設css -->
 		<meta charset="utf-8">
@@ -97,66 +95,116 @@
 					<div class="container">
 						<div class="col-md-10 col-md-offset-1 col-xs-12 text-center">
 							<div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
-								<h1>個人狀態</h1>
+								<h1>點名Time</h1>
 								<ol class="breadcrumb">
 								<li><a href="index.php">首頁</a></li>
-								<li class="active">個人狀態</li>
+								<li class="active">點名Time</li>
 								</ol>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>	
-			
-			<?php
-				$tp=$_SESSION['Bear-RollCall_Account'];
-				$sql_query_data="SELECT * FROM AccountTable where Account='$tp'";//資料撈取
-				$Data_result=mysqli_query($db_link,$sql_query_data) or die("查詢失敗");
-				while($row=mysqli_fetch_array($Data_result))
-				{
-					$Account=$row[0];
-					$Password=$row[1];
-					$Stauts=$row[2];
-					$EMail=$row[3];
-					$Name=$row[4];
-				}
-			?>
-			<!--中央重點-->
-			<section class="service-promotion section-padding">
-				<div class="container">
-					<div class="row text-center">
-						<div class="col-md-4 col-sm-4 col-xs-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s" data-wow-offset="0">
-							<div class="single_service_promotion">
-								<h1>個人資料</h1>
-								<p>
-									您的帳號：<?php echo $Account;?><br>
-									身分狀態：<?php echo $Stauts;?><br>
-									使用者名稱：<?php echo $Name;?><br>
-									登記信箱：<?php echo $EMail;?><br>
-								</p>
-							</div>
+
+			<!-- 中央重點 -->
+			<section class="service" style="align:center;width: 100%;">			
+				<div class="container" style="align:center;width: 100%;;">
+					<div class="row text-center" style="margin:0px auto;align:center;width: 90%;">
+						<div class="section-title">
+							<h1>此頁查看點名狀態</h1>
+							<span></span>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
-							<div class="single_service_promotion">
-								<h1>密碼修改</h1>
-								<form class="form" name="ChangePWD" method="post" action="ChangePassword.php">
-									<p>目前密碼：<?php echo $Password;?></p>
-									<input type="password" name="NewPassword1" class="form-control" placeholder="輸入新密碼"required="required"><br>
-									<input type="password" name="NewPassword2" class="form-control" placeholder="二次確認新密碼"required="required"><br>
-									<input type="submit" value="密碼修改" name="ChangePWD" id="submitButton" class="btn-light-bg" title="密碼修改"/><br>
-								</form>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4 col-xs-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.4s" data-wow-offset="0">
-							<div class="single_service_promotion">
-								<h1>待開發</h1>
-								<p>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>	
+						<?php //查找教室
+							$ClassRoom="";
+							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+							$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
+							while($row=mysqli_fetch_array($ClassName_result)){
+								if(isset($_GET['ClassEng'])){
+									if(!strcmp($_GET['ClassEng'],($row[1]."_".$row[3]))){
+										$ClassRoom=$row[4];
+										break;
+									}
+								}
+							}
+						?>
+					
+							<form class="form" name="RollCall" method="post" action="RollCallCheck.php">
+								<?php
+								if(isset($_GET['ClassCht']))
+									echo "<h3>目前所選課程：".$_GET['ClassCht'].",教室於：".$ClassRoom."</h3>";
+								if(isset($_GET['ClassEng'])){
+									echo "<input type=\"hidden\" name=\"ClassEng\" value=\"".$_GET['ClassEng']."\"></input>";
+								}
+								if(isset($_GET['ClassRoom'])){
+									echo "<input type=\"hidden\" name=\"ClassRoom\" value=\"".$_GET['ClassRoom']."\"></input>";
+								}
+								if(isset($_GET['ClassCht'])){
+									echo "<input type=\"hidden\" name=\"ClassCht\" value=\"".$_GET['ClassCht']."\"></input>";
+								}
+								?>
+								<select name="WhatClass" style="font-size:20px;" id="SelectClass">
+									<option>請選擇課程</option>
+									<?php 
+										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+										$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
+										$TitleSemester="";
+										$ClassRoom="";
+										while($row=mysqli_fetch_array($ClassName_result)){
+											if($TitleSemester!=$row[1]){//如果找到不同學期，新增一標題(開頭)
+												echo "<optgroup label=$row[1]>";
+												$TitleSemester=$row[1];
+											}
+											/*塞各學期課程*/
+											if(isset($_GET['ClassEng'])){
+												if(!strcmp($_GET['ClassEng'],($row[1]."_".$row[3]))){
+													echo "<option selected value=".$row[1]."_".$row[3].">".$row[2]."</option>";//當下真正的學期與課程
+													$ClassRoom=$row[4];
+												}
+												else
+													echo "<option value=".$row[1]."_".$row[3].">".$row[2]."</option>";
+											}
+											else
+												 echo "<option value=".$row[1]."_".$row[3].">".$row[2]."</option>";
+											if($TitleSemester!=$row[1]){//如果找到不同學期，新增一標題(結尾)
+												echo "</optgroup>";
+											}
+										}
+									?>
+								</select><br><br>
+							<table style="table-layout:fixed;">
+								<tr>
+									<th style="width:15%;">學號</th>
+									<th style="width:13%;">姓名</th>
+									<?php 
+										for($week=1;$week<=18;$week++)	
+											echo "<th style=\"width:8%;font-size:22px\">第".$week."週</th>";
+									?>
+								</tr>
+								<?php 
+									if(isset($_GET['ClassEng'])){//有選擇才有表格
+										$sql_query_RollCall="SELECT * FROM `".$_GET['ClassEng']."` ORDER BY `".$_GET['ClassEng']."`.`StudentID` ASC";
+										$RollCall_result=mysqli_query($db_link_rollcall,$sql_query_RollCall) or die("查詢失敗");
+										while($row=mysqli_fetch_array($RollCall_result)){//有誰修這一堂課
+											echo "<tr>";
+											echo "<td>$row[0]</td>";
+											echo "<td>".substr($row[1],0,3)."◯◯</td>";
+											for($week=2;$week<=19;$week++){//學號+姓名+20周
+												if($row[$week]!="")
+													echo "<td>".$row[$week]."</td>";
+												else
+												echo "<td></td>";
+											}
+											echo"</tr>";
+										}
+												
+									} 
+								?>
+							</form>
+						</table>
+					</div><!--- END ROW -->
+				</div><!--- END CONTAINER -->
+			</section>
+			<!--底部資訊-->	
 			<!--底部資訊-->
 			<section class="footer-top">
 				<div class="footer_overlay section-padding">	
@@ -258,6 +306,24 @@
 				itemsDesktop : [1199,3],
 				itemsDesktopSmall : [979,3]
 				});
+			</script>
+			<script>//下拉式選單跳轉用
+				window.onload=initForm;
+				function initForm(){
+					var oselClass=document.getElementById("SelectClass");
+					oselClass.onchange=jumpPage;
+				}
+				function jumpPage(){
+					var oselClass=document.getElementById("SelectClass");
+					var ClassRoom=document.getElementById("ClassRoom");
+					var newURL="";
+					newURL+="?ClassEng="+oselClass.options [oselClass.selectedIndex].value;
+					newURL+="&ClassCht="+oselClass.options [oselClass.selectedIndex].text;
+					//把下拉式選單的選擇GET給自己
+					if((oselClass.options [oselClass.selectedIndex].value!="請選擇課程")){
+						window.location.href=newURL;
+					}
+				}
 			</script>
 		</div>
     </body>

@@ -46,10 +46,14 @@
 			}
 		}
 		//跳轉回本來點名頁面
-		if(isset($_POST['NeedSeat']))	//不用記錄座位
+		if(isset($_POST['NeedSeat']))//不計座位 不鎖週次
 			echo"<script  language=\"JavaScript\">;location.href=\"RollCall.php?ClassEng=".$_POST['ClassEng']."&ClassCht=".$_POST['ClassCht']."&Week=".$_POST['Week']."&ClassRoom=".$_POST['ClassRoom']."&NeedSeat=1\";</script>";		
-		else
-		echo"<script  language=\"JavaScript\">;location.href=\"RollCall.php?ClassEng=".$_POST['ClassEng']."&ClassCht=".$_POST['ClassCht']."&Week=".$_POST['Week']."&ClassRoom=".$_POST['ClassRoom']."&NeedSeat=0\";</script>";		
+		if(isset($_POST['NeedSeat']))//不計座位 鎖定週次
+			echo"<script  language=\"JavaScript\">;location.href=\"RollCall.php?ClassEng=".$_POST['ClassEng']."&ClassCht=".$_POST['ClassCht']."&Week=".$_POST['Week']."&ClassRoom=".$_POST['ClassRoom']."&NeedSeat=1\";</script>";			
+		if(isset($_POST['NeedSeat']))//計座位 鎖定週次
+			echo"<script  language=\"JavaScript\">;location.href=\"RollCall.php?ClassEng=".$_POST['ClassEng']."&ClassCht=".$_POST['ClassCht']."&Week=".$_POST['Week']."&ClassRoom=".$_POST['ClassRoom']."&NeedSeat=1\";</script>";			
+		else//計座位 不鎖週次
+			echo"<script  language=\"JavaScript\">;location.href=\"RollCall.php?ClassEng=".$_POST['ClassEng']."&ClassCht=".$_POST['ClassCht']."&Week=".$_POST['Week']."&ClassRoom=".$_POST['ClassRoom']."&NeedSeat=1\";</script>";			
 	}
 	else//不當路徑進入
 		echo"<script  language=\"JavaScript\">alert('請由正確路徑進入並選擇課程與週次');location.href=\"RollCall.php\";</script>";		
