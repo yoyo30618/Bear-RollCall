@@ -149,7 +149,7 @@
 						</div>
 						<?php //查找教室
 							$ClassRoom="";
-							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 							$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 							while($row=mysqli_fetch_array($ClassName_result)){
 								if(isset($_GET['ClassEng'])){
@@ -202,7 +202,7 @@
 								<select name="WhatClass" style="font-size:20px;" id="SelectClass">
 									<option>請選擇課程</option>
 									<?php 
-										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 										$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 										$TitleSemester="";
 										$ClassRoom="";
