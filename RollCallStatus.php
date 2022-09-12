@@ -116,7 +116,7 @@
 						</div>
 						<?php //查找教室
 							$ClassRoom="";
-							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 							$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 							while($row=mysqli_fetch_array($ClassName_result)){
 								if(isset($_GET['ClassEng'])){
@@ -145,7 +145,7 @@
 								<select name="WhatClass" style="font-size:20px;" id="SelectClass">
 									<option>請選擇課程</option>
 									<?php 
-										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 										$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 										$TitleSemester="";
 										$ClassRoom="";
@@ -187,7 +187,7 @@
 										while($row=mysqli_fetch_array($RollCall_result)){//有誰修這一堂課
 											echo "<tr>";
 											echo "<td>$row[0]</td>";
-											echo "<td>".substr($row[1],0,3)."◯◯</td>";
+											echo "<td>".str_pad(substr($row[1],0,3),strlen($row[1]),"◯")."</td>";
 											for($week=2;$week<=19;$week++){//學號+姓名+20周
 												if($row[$week]!="")
 													echo "<td>".$row[$week]."</td>";
