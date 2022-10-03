@@ -196,7 +196,6 @@
 											}
 											echo"</tr>";
 										}
-<<<<<<< HEAD
 										echo "<tr>";
 										echo "<td colspan='2'>到課人數</td>";
 										for($i=1;$i<=18;$i++){
@@ -210,9 +209,6 @@
 											echo "</td>";
 										}
 										echo "</tr>";
-=======
-												
->>>>>>> b1f53c3d4f0125c144a0211d2bf8b3012b555e98
 									} 
 								?>
 							</form>
