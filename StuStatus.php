@@ -68,7 +68,7 @@
 						<nav>
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="index.php">首頁</a></li>
-								<li><a href="status.php">個人狀態</a></li>
+								<li><a href="RollCallStatus.php">點名狀態</a></li>
 								<?php
 									if(isset($_COOKIE['Bear-RollCall_Status'])&&($_COOKIE['Bear-RollCall_Status'])=="管理員"){
 										echo "<li><a>課程點名/修正</a>";
@@ -79,11 +79,9 @@
 										echo "</li>";
 									}
 									if(isset($_COOKIE['Bear-RollCall_Account'])){//如果有設定cookie代表已經登入
-										echo "<li><a>登出</a>";
-											echo "<ul class=\"sub-menu\">";
-												echo "<li><a href=\"logout.php\">登出</a></li>";
-											echo "</ul>";
-										echo "</li>";
+										echo "<li><a href=\"status.php\">個人狀態</a></li>";
+										
+										echo "<li><a href=\"logout.php\">登出</a></li>";
 									}
 									else{//尚未登入則顯示登入與註冊按鈕
 										echo "<li><a href=\"login.php\">登入</a></li>";
@@ -175,11 +173,8 @@
 									<input type="text" name="ClassName_Eng" class="form-control" placeholder="新課程之英文名稱"required="required"><br>
 									課程開始日~結束日<br>
 									<input id="date" type="date" name="FirstWeek" required="required">
-									<input id="date" type="date" name="LastWeek" required="required"><br>
-									課程時段<br>
-									<input id="date" type="time" name="StartTime" required="required">
-									<input id="date" type="time" name="EndTime" required="required"><br><br>
-									<select style="font-size:20px;" name="Week">
+									<input id="date" type="date" name="LastWeek" required="required"><br><br>
+									星期&nbsp;<select style="font-size:20px;" name="Week">
 										<option disabled ="disabled">課程星期</option>
 										<option value="7">日</option>
 										<option value="1">一</option>
@@ -189,6 +184,9 @@
 										<option value="5">五</option>
 										<option value="6">六</option>
 									</select><br><br>
+									課程時段<br>
+									<input id="date" type="time" name="StartTime" required="required">
+									<input id="date" type="time" name="EndTime" required="required"><br><br>
 									
 									<input type="submit" value="新增課程" name="CreateClass" id="submitButton" class="btn-light-bg" title="新增課程"/><br>
 								</form>

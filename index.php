@@ -64,7 +64,7 @@
 						<nav>
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="index.php">首頁</a></li>
-								<li><a href="status.php">個人狀態</a></li>
+								<li><a href="RollCallStatus.php">點名狀態</a></li>
 								<?php
 									if(isset($_COOKIE['Bear-RollCall_Status'])&&($_COOKIE['Bear-RollCall_Status'])=="管理員"){
 										echo "<li><a>課程點名/修正</a>";
@@ -75,11 +75,9 @@
 										echo "</li>";
 									}
 									if(isset($_COOKIE['Bear-RollCall_Account'])){//如果有設定cookie代表已經登入
-										echo "<li><a>登出</a>";
-											echo "<ul class=\"sub-menu\">";
-												echo "<li><a href=\"logout.php\">登出</a></li>";
-											echo "</ul>";
-										echo "</li>";
+										echo "<li><a href=\"status.php\">個人狀態</a></li>";
+										
+										echo "<li><a href=\"logout.php\">登出</a></li>";
 									}
 									else{//尚未登入則顯示登入與註冊按鈕
 										echo "<li><a href=\"login.php\">登入</a></li>";

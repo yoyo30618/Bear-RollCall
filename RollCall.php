@@ -10,6 +10,36 @@
 				header('refresh:0;url=index.php');
 			}
 		?>
+		<?php
+			function daysDiff($date1, $date2)
+			{
+				$first = strtotime($date1);
+				$second = strtotime($date2);
+				$diff_seconds=$second-$first;
+				$time = floor(($diff_seconds)/86400);
+				return (int)$time;
+			}
+			if(isset($_GET['LockWeek'])){//如果周次已設定 依照設定為主
+			}
+			else{
+				if(isset($_GET['ClassEng'])){//如果有選課了
+					$Semester=substr($_GET['ClassEng'],0,4);//前三個為學期
+					$ClassEngName=substr($_GET['ClassEng'],5);//後面為課程名稱
+					$sql_query_RollCall="SELECT * FROM `ClassName` WHERE `Name_eng`=\"".$ClassEngName."\" AND `Semester`=\"".$Semester."\"";
+
+					$RollCall_result=mysqli_query($db_link_rollcall,$sql_query_RollCall) or die("查詢失敗");
+					while($row=mysqli_fetch_array($RollCall_result)){//該課程開始日期
+						$WeekDiff=0;
+						$WeekDiff=(int)(daysDiff($row['FirstWeek'],date("Y-m-d"))/7)+1;
+						if($WeekDiff>0&&$WeekDiff<19)
+							$_GET['Week']="第".$WeekDiff."週";
+						else
+							$_GET['Week']="第1週";
+						break;
+					}
+				}
+			}
+		?>
 		<!-- 設定抬頭與預設css -->
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,7 +98,7 @@
 						<nav>
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="index.php">首頁</a></li>
-								<li><a href="status.php">個人狀態</a></li>
+								<li><a href="RollCallStatus.php">點名狀態</a></li>
 								<?php
 									if(isset($_COOKIE['Bear-RollCall_Status'])&&($_COOKIE['Bear-RollCall_Status'])=="管理員"){
 										echo "<li><a>課程點名/修正</a>";
@@ -79,11 +109,9 @@
 										echo "</li>";
 									}
 									if(isset($_COOKIE['Bear-RollCall_Account'])){//如果有設定cookie代表已經登入
-										echo "<li><a>登出</a>";
-											echo "<ul class=\"sub-menu\">";
-												echo "<li><a href=\"logout.php\">登出</a></li>";
-											echo "</ul>";
-										echo "</li>";
+										echo "<li><a href=\"status.php\">個人狀態</a></li>";
+										
+										echo "<li><a href=\"logout.php\">登出</a></li>";
 									}
 									else{//尚未登入則顯示登入與註冊按鈕
 										echo "<li><a href=\"login.php\">登入</a></li>";
@@ -121,7 +149,7 @@
 						</div>
 						<?php //查找教室
 							$ClassRoom="";
-							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+							$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 							$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 							while($row=mysqli_fetch_array($ClassName_result)){
 								if(isset($_GET['ClassEng'])){
@@ -174,7 +202,7 @@
 								<select name="WhatClass" style="font-size:20px;" id="SelectClass">
 									<option>請選擇課程</option>
 									<?php 
-										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC";
+										$sql_query_ClassName="SELECT * FROM `ClassName` ORDER BY `ClassName`.`Semester` ASC,`ClassName`.`Name_Eng` ASC";
 										$ClassName_result=mysqli_query($db_link_rollcall,$sql_query_ClassName) or die("查詢失敗");
 										$TitleSemester="";
 										$ClassRoom="";
@@ -186,7 +214,7 @@
 											/*塞各學期課程*/
 											if(isset($_GET['ClassEng'])){
 												if(!strcmp($_GET['ClassEng'],($row[1]."_".$row[3]))){
-													echo "<option selected value=".$row[1]."_".$row[3].">".$row[2]."</option>";
+													echo "<option selected value=".$row[1]."_".$row[3].">".$row[2]."</option>";//當下真正的學期與課程
 													$ClassRoom=$row[4];
 												}
 												else
@@ -200,6 +228,7 @@
 										}
 									?>
 								</select>
+								
 								<select name="WhatWeek" style="font-size:20px;" id="SelectWeek">
 									<option>請選擇週次</option>
 									<?php 
@@ -250,6 +279,19 @@
 											}
 											echo"</tr>";
 										}
+										echo "<tr>";
+										echo "<td colspan='2'>到課人數</td>";
+										for($i=1;$i<=18;$i++){
+											echo "<td>";
+											$sql_query_Toclass="SELECT COUNT(*) AS StuCnt FROM `".$_GET['ClassEng']."` WHERE `Week".$i."`!=''";
+											$Toclass_result=mysqli_query($db_link_rollcall,$sql_query_Toclass) or die("查詢失敗");
+											while($row=mysqli_fetch_array($Toclass_result)){//有誰修這一堂課
+												echo $row['StuCnt'];
+												break;
+											}
+											echo "</td>";
+										}
+										echo "</tr>";
 												
 									} 
 								?>
@@ -379,7 +421,7 @@
 					newURL+="&ClassCht="+oselClass.options [oselClass.selectedIndex].text;
 					newURL+="&Week="+oselWeek.options [oselWeek.selectedIndex].text;
 					//把下拉式選單的選擇GET給自己
-					if((oselClass.options [oselClass.selectedIndex].value!="請選擇課程")&&(oselWeek.options [oselWeek.selectedIndex].value!="請選擇週次")){
+					if((oselClass.options [oselClass.selectedIndex].value!="請選擇課程")){
 						window.location.href=newURL;
 					}
 				}
